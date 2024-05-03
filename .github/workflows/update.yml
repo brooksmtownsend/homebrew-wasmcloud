@@ -41,10 +41,12 @@ jobs:
       - name: Normalize inputs for pipeline use
         uses: actions/github-script@v7
         id: normalize_inputs
+        env:
+          input_tag: ${{ env.input_tag }}
+          input_prefix: ${{ env.input_prefix }}
         with:
           script: |
-            const input_tag = env.input_tag
-            const input_prefix = env.input_prefix
+            const { input_tag, input_prefix } = process.env
             const tag_no_v = input_tag.replaceAll('v', '')
             const tag_with_v = 'v' + tag_no_v
             const prefix = input_prefix.replace(/^-+/g, '').replace(/-+$/g, '')
